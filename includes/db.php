@@ -1,12 +1,12 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "dpharm_college";
-// $servername = "sql204.infinityfree.com";
-// $username = "if0_39613481";
-// $password = "OKkuWtOrzAcBlNm";
-// $dbname = "if0_39613481_dpharm_college";
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $dbname = "dpharm_college";
+$servername = "srv1988.hstgr.io";
+$username = "u448940947_road2tech";
+$password = "Road2Tech";
+$dbname = "u448940947_viopdhanore";
 
 $conn = new mysqli($servername, $username, $password);
 
