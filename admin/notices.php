@@ -3,7 +3,7 @@
 $page_title = "📤 Manage Notices";
 ?>
 
-<div class="p-6 max-w-6xl mx-auto space-y-8">
+<div class="p-6">
     <!-- Upload Form -->
     <form method="POST" enctype="multipart/form-data" class="space-x-4 flex flex-row">
         <input type="text" name="title" placeholder="Notice Title"
@@ -38,17 +38,26 @@ $page_title = "📤 Manage Notices";
                     if ($getFile && $getFile->num_rows > 0) {
                         $file = $getFile->fetch_assoc()['pdf_path'];
                         if (file_exists($file)) {
-                            unlink($file); // Delete from server
+                            unlink($file);
                         }
                     }
                     $conn->query("DELETE FROM notices WHERE id = $id");
-                    header("Location: admin_notices.php");
+                    header("Location: notices.php");
                     exit();
                 }
 
                 // Fetch and display notices
                 $result = $conn->query("SELECT * FROM notices ORDER BY posted_on DESC");
                 $count = 1;
+                // if no notices, show message
+                if ($result->num_rows === 0):
+                    ?>
+                    <tr>
+                        <td colspan="5" class="text-center text-base py-6">No notices uploaded yet.</td>
+                    </tr>
+                    <?php
+                endif;
+
                 while ($row = $result->fetch_assoc()):
                     ?>
                     <tr>

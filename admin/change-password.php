@@ -39,23 +39,42 @@ if (isset($_POST['delete_admin'])) {
 $admins = $conn->query("SELECT * FROM admins");
 ?>
 
-<div class="p-6 max-w-6xl mx-auto space-y-8">
-
+<div class="p-6">
     <!-- Add Admin Form -->
     <form method="POST" class="space-x-4 flex flex-row">
         <input type="text" name="username" placeholder="Username" required
-            class="input input-primary bg-white text-black input-bordered w-full" />
-        <input type="email" name="email" placeholder="Email"
-            class="input input-primary bg-white text-black input-bordered w-full" />
-        <input type="password" name="password" placeholder="Password" required
-            class="input input-primary bg-white text-black input-bordered w-full" />
+            class="input input-primary input-bordered w-full" />
+        <input type="email" name="email" placeholder="Email" class="input input-primary input-bordered w-full" />
+        <div class="join w-full">
+            <input type="password" name="password" placeholder="Password" id="adminPassword" required
+                class="input input-primary input-bordered w-full join-item" />
+            <button type="button" id="togglePassword" class="btn btn-neutral join-item">
+                <!-- Eye SVG (visible by default) -->
+                <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M2.25 12s3.75-7.5 9.75-7.5S21.75 12 21.75 12s-3.75 7.5-9.75 7.5S2.25 12 2.25 12z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+                <!-- Eye Slash SVG (hidden by default) -->
+                <svg id="eyeSlashIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="2" stroke="currentColor" class="w-6 h-6 hidden">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3.98 8.223A10.477 10.477 0 0 0 1.5 12s3.75 7.5 10.5 7.5c1.806 0 3.48-.48 4.932-1.318M9.88 9.88A3 3 0 0 0 12 15a3 3 0 0 0 2.12-.88m-4.24 0L3 3m0 0l18 18" />
+                </svg>
+            </button>
+        </div>
         <button type="submit" name="add_admin" class="btn btn-primary">Add Admin</button>
     </form>
+
+    <div class="divider my-6 text-black divider-neutral">
+        👩‍🏫 Manage Admins
+    </div>
 
     <!-- Admin Table -->
     <div class="overflow-x-auto bg-base-200 p-4 rounded-xl">
         <table class="table table-zebra w-full">
-            <thead class="text-white">
+            <thead class="text-base-content">
                 <tr>
                     <th>#</th>
                     <th>👤 Username</th>
@@ -74,10 +93,10 @@ $admins = $conn->query("SELECT * FROM admins");
                         <td><?= $row['created_at'] ?></td>
                         <td class="flex space-x-2">
                             <!-- Change Password Form -->
-                            <form method="POST" class="flex space-x-2">
+                            <form method="POST" class="flex space-x-2 w-full">
                                 <input type="hidden" name="admin_id" value="<?= $row['id'] ?>">
                                 <input type="password" name="new_password" placeholder="New Password" required
-                                    class="input input-bordered input-sm" />
+                                    class="input input-primary w-full" />
                                 <button type="submit" name="change_password" class="btn btn-sm btn-warning">Change</button>
                             </form>
 
@@ -93,6 +112,34 @@ $admins = $conn->query("SELECT * FROM admins");
         </table>
     </div>
 </div>
+
+<script>
+    // Toggle password visibility for Add Admin
+    const toggleBtn = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('adminPassword');
+    const eyeIcon = document.getElementById('eyeIcon');
+    const eyeSlashIcon = document.getElementById('eyeSlashIcon');
+
+    toggleBtn.addEventListener('click', () => {
+        const type = passwordInput.type === 'password' ? 'text' : 'password';
+        passwordInput.type = type;
+        eyeIcon.classList.toggle('hidden');
+        eyeSlashIcon.classList.toggle('hidden');
+    });
+
+    // Toggle password visibility for Change Password fields in table
+    document.querySelectorAll('.toggle-password').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const input = btn.parentElement.querySelector('input');
+            const eye = btn.querySelector('.eye');
+            const eyeSlash = btn.querySelector('.eye-slash');
+            const type = input.type === 'password' ? 'text' : 'password';
+            input.type = type;
+            eye.classList.toggle('hidden');
+            eyeSlash.classList.toggle('hidden');
+        });
+    });
+</script>
 
 <?php
 $conn->close();

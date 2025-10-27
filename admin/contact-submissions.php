@@ -17,7 +17,7 @@ if (isset($_GET['delete'])) {
 $page_title = "Contact Submissions";
 ?>
 
-<div class="overflow-x-auto max-w-7xl mx-auto">
+<div class="overflow-x-auto mx-auto">
     <table class="table table-zebra w-full bg-base-300 text-base">
         <thead>
             <tr>
@@ -56,7 +56,7 @@ $page_title = "Contact Submissions";
             } else {
                 ?>
                 <tr>
-                    <td colspan="5" class="text-center">No submissions found.</td>
+                    <td colspan="7" class="text-center text-base">No submissions found.</td>
                 </tr>
                 <?php
             }

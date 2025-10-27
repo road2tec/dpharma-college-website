@@ -25,7 +25,7 @@ if (isset($_GET['edit'])) {
 }
 ?>
 
-<div class="p-6 max-w-6xl mx-auto">
+<div class="p-6">
     <form method="POST" enctype="multipart/form-data" class="space-x-4 flex flex-col sm:flex-row gap-4 mb-6">
         <input type="text" name="name" placeholder="Faculty Name" value="<?= htmlspecialchars($edit_name) ?>"
             class="input input-primary bg-white text-black input-bordered w-full" required />
@@ -57,7 +57,7 @@ if (isset($_GET['edit'])) {
         if (isset($_GET['delete'])) {
             $delete_id = intval($_GET['delete']);
             $conn->query("DELETE FROM faculty WHERE id = $delete_id");
-            header("Location: admin_faculty.php");
+            header("Location: faculty.php");
             exit();
         }
 
@@ -73,10 +73,10 @@ if (isset($_GET['edit'])) {
                 <div class="card-body">
                     <h2 class="card-title uppercase"><?= htmlspecialchars($row['name']) ?></h2>
                     <?php if (!empty($row['designation'])): ?>
-                        <p class="text-sm text-gray-300"><?= htmlspecialchars($row['designation']) ?></p>
+                        <p class="text-sm text-base-content/60"><?= htmlspecialchars($row['designation']) ?></p>
                     <?php endif; ?>
                     <?php if (!empty($row['qualification'])): ?>
-                        <p class="text-xs text-gray-400"><?= htmlspecialchars($row['qualification']) ?></p>
+                        <p class="text-xs text-base-content/60"><?= htmlspecialchars($row['qualification']) ?></p>
                     <?php endif; ?>
                     <div class="flex justify-center gap-2 mt-2">
                         <a href="?edit=<?= $row['id'] ?>" class="btn btn-sm btn-info">Edit</a>
@@ -87,10 +87,10 @@ if (isset($_GET['edit'])) {
                 </div>
             </div>
         <?php endwhile; ?>
-        <?php if ($result->num_rows === 0): ?>
-            <p class="text-center text-gray-500 text-lg">No faculty records found.</p>
-        <?php endif; ?>
     </div>
+    <?php if ($result->num_rows === 0): ?>
+        <p class="text-center text-base-content/80 text-lg">No faculty records found.</p>
+    <?php endif; ?>
 </div>
 
 <?php

@@ -3,7 +3,7 @@
 $page_title = "Upload Image or Video";
 ?>
 
-<div class="p-6 max-w-6xl mx-auto">
+<div class="p-6">
     <form method="POST" enctype="multipart/form-data" class="space-x-4 flex flex-row">
         <input type="text" name="title" placeholder="Enter Image Title"
             class="input input-primary bg-white text-black input-bordered w-full" required />

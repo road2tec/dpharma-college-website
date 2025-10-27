@@ -3,7 +3,7 @@
 $page_title = "📥 Manage Downloadable Documents";
 ?>
 
-<div class="p-6 max-w-6xl mx-auto space-y-8">
+<div class="p-6">
     <!-- Upload Form -->
     <form method="POST" enctype="multipart/form-data" class="space-x-4 flex flex-row">
         <input type="text" name="title" placeholder="Download Title"
@@ -36,11 +36,11 @@ $page_title = "📥 Manage Downloadable Documents";
                     if ($getFile && $getFile->num_rows > 0) {
                         $file = $getFile->fetch_assoc()['pdf_path'];
                         if (file_exists($file)) {
-                            unlink($file); // Delete from server
+                            unlink($file);
                         }
                     }
                     $conn->query("DELETE FROM downloads WHERE id = $id");
-                    header("Location: admin_downloads.php");
+                    header("Location: documents.php");
                     exit();
                 }
 
@@ -51,7 +51,11 @@ $page_title = "📥 Manage Downloadable Documents";
                     $downloads[] = $row;
                 }
                 ?>
-
+                <?php if (empty($downloads)): ?>
+                    <tr>
+                        <td colspan="5" class="text-center text-base">No documents uploaded yet.</td>
+                    </tr>
+                <?php endif; ?>
                 <?php foreach ($downloads as $index => $file): ?>
                     <tr>
                         <td><?= $index + 1 ?></td>
